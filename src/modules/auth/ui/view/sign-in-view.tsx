@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import {FaGithub,FaGoogle} from 'react-icons/fa'
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from '@/components/ui/button';
@@ -40,7 +41,8 @@ export const SignInView = ()=>{
         authClient.signIn.email(
             {
                 email:data.email,
-                password:data.password
+                password:data.password,
+                callbackURL:"/"
             },
             {
                 onSuccess:()=>{
@@ -115,11 +117,25 @@ export const SignInView = ()=>{
                                     <span className='bg-card text-muted-foreground relative z-10 px-2'>Or continue with</span>
                                 </div>
                                 <div className='grid grid-cols-2 gap-4'>
-                                    <Button disabled={pending} className='w-full' variant='outline' type='button'>
-                                        Google
+                                    <Button disabled={pending} className='w-full' variant='outline' type='button'
+                                        onClick={()=>{
+                                        setPending(true)
+                                        authClient.signIn.social({
+                                            provider:"google",
+                                            fetchOptions:{onSuccess:()=>setPending(false)}
+                                        })}}
+                                    >
+                                     <FaGoogle />
                                     </Button>
-                                    <Button disabled={pending} className='w-full' variant='outline' type='button'>
-                                        Github
+                                    <Button disabled={pending} className='w-full' variant='outline' type='button'
+                                     onClick={()=> {
+                                        setPending(true)
+                                        authClient.signIn.social({
+                                            provider:"github",
+                                            fetchOptions:{onSuccess:()=>setPending(false)}
+                                        })}}
+                                    >
+                                        <FaGithub />
                                     </Button>
                                 </div>
                                 <div className='text-center text-sm'>
