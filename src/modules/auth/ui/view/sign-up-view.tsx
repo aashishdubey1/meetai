@@ -3,9 +3,9 @@ import {z} from 'zod'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { OctagonAlertIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import {FaGithub,FaGoogle} from 'react-icons/fa'
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from '@/components/ui/button';
@@ -13,18 +13,19 @@ import { Alert,AlertTitle } from '@/components/ui/alert';
 import {Form,FormControl,FormField,FormItem,FormLabel,FormMessage} from '@/components/ui/form'
 import { useForm } from 'react-hook-form';
 import { authClient } from '@/lib/auth-client';
+import { cosineDistance } from 'drizzle-orm';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
     name:z.string().min(5,{message:"Name is required"}),
     email:z.string().email(),
     password:z.string().min(1,{message:"Password is Required"}),
-    confirmPassword:z.string().min(1,{message:"Password is Required"})
+    confirmPassword:z.string().min(1,{message:"Password is Required"}) 
 }).refine((data)=>data.password == data.confirmPassword,{message:"Passwords don't match",path:['confirmPassword']})
 
 
 export const SignUpView = ()=>{
-
-    const router = useRouter();
+    const router = useRouter()
     const [error,setError] = useState<string | null>(null);
     const [pending,setPending] = useState(false);
 
@@ -46,11 +47,12 @@ export const SignUpView = ()=>{
                 name:data.name,
                 email:data.email,
                 password:data.password,
+                callbackURL:"/"
                 
             },
             {
                 onSuccess:()=>{
-                    setPending(false)
+                    setPending(false) 
                     router.push('/')
                 },
                 onError:({error})=>{
@@ -159,11 +161,19 @@ export const SignUpView = ()=>{
                                     <span className='bg-card text-muted-foreground relative z-10 px-2'>Or continue with</span>
                                 </div>
                                 <div className='grid grid-cols-2 gap-4'>
-                                    <Button disabled={pending} className='w-full' variant='outline' type='button'>
-                                        Google
+                                    <Button disabled={pending} className='w-full' variant='outline' type='button'
+                                          onClick={()=> authClient.signIn.social({
+                                            provider:"google"
+                                        })}
+                                    >
+                                        <FaGoogle />
                                     </Button>
-                                    <Button disabled={pending} className='w-full' variant='outline' type='button'>
-                                        Github
+                                    <Button disabled={pending} className='w-full' variant='outline' type='button'
+                                        onClick={()=> authClient.signIn.social({
+                                            provider:"github"
+                                        })}
+                                    >
+                                        <FaGithub />
                                     </Button>
                                 </div>
                                 <div className='text-center text-sm'>
