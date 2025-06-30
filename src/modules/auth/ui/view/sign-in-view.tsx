@@ -145,9 +145,9 @@ export const SignInView = ()=>{
                             </div>
                         </form>
                     </Form>
-                    <div className="hidden md:flex text-3xl relative flex-col items-center justify-center bg-radial from-teal-300 to-teal-600">
+                    <div className="hidden md:flex text-3xl relative flex-col items-center justify-center bg-radial from-sidebar-accent to-sidebar">
                         <img src="./logo.svg" alt="Image" className="h-[92px] w-[92px]" />  
-                        <p className="text-3xl font-semibold text-white">Meet.Ai</p>
+                        <p className="text-3xl font-semibold">Meet.Ai</p>
                     </div>
                 </CardContent>
             </Card>
