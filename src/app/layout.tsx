@@ -23,10 +23,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+  return ( 
     <TRPCReactProvider>
     <html lang="en">
-      <body
+      <body 
         className={`${inter.className} antialiased`}
       >
         {children}
