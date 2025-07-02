@@ -25,7 +25,7 @@ const GeneratedAvatar = ({seed,classname,variant}:GeneratedAvatarProp) =>{
     }
 
     return (
-        <Avatar>
+        <Avatar className={classname}>
             <AvatarImage src={avatar.toDataUri()}/>
             <AvatarFallback>{seed.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
