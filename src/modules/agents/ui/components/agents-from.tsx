@@ -47,9 +47,9 @@ export const AgentForm  = ({
                 await queryClient.invalidateQueries(
                     trpc.agents.getMany.queryOptions()
                 );
-                if(initialValues?.[0].id){
+                if(initialValues?.id){
                     await queryClient.invalidateQueries(
-                        trpc.agents.getOne.queryOptions({id:initialValues[0].id})
+                        trpc.agents.getOne.queryOptions({id:initialValues.id})
                     )
                 }
                 onSuccess?.();
@@ -63,13 +63,13 @@ export const AgentForm  = ({
     const form = useForm<z.infer<typeof agentsInsertSchema>>({
         resolver:zodResolver(agentsInsertSchema),
         defaultValues:{
-            name: initialValues?.[0].name ?? "",
-            instructions:initialValues?.[0].instructions ??""
+            name: initialValues?.name ?? "",
+            instructions:initialValues?.instructions ??""
         }
     })
 
 
-    const isEdit = !!initialValues?.[0].id; 
+    const isEdit = !!initialValues?.id; 
 
     const isPending = createAgent.isPending
     
