@@ -1,27 +1,31 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { PlusIcon, XCircleIcon } from "lucide-react";
-// import { NewAgentDialog } from "./new-agent-dialog";
+import { PlusIcon,XCircleIcon } from "lucide-react";
 import { useState } from "react";
 import { NewMeetingDialog } from "./new-meeting-dialog";
-// import { useAgentsFilters } from "../../hooks/use-agents-filters";
-// import { AgentsSearchFilter } from "./agents-search-filters";
-// import { DEFAULT_PAGE } from "@/constant";
+import { MeetingsSearchFilter } from "./meetings-search-filters";
+import { StatusFilter } from "./status-filter";
+import { AgentIdFilter } from "./agent-id-filter";
+import { useMeetingsFilters } from "../../hooks/use-meetings-filters";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export const MeetingsListHeader = ()=>{
+    const [filters,setFilters] = useMeetingsFilters()
 
     const [isDialogOpen,setIsDialogOpen] = useState(false)
-    // const [filters,setFilters] = useAgentsFilters();
 
-    // const isAnyFilterModified = !!filters.search;
+    const isAnyFilterModified = !!filters.status || !!filters.search || !!filters.agentId 
 
-    // const onClearFilters = () => {
-    //     setFilters({
-    //         search:"",
-    //         page:DEFAULT_PAGE
-    //     })
-    // }
+    const onClearFilters = ()=>{
+        setFilters({
+            status:null,
+            agentId:",",
+            search:"",
+            page:1
+
+    })
+    }
 
     return (
         <>
@@ -34,14 +38,19 @@ export const MeetingsListHeader = ()=>{
                     New Meeting
                 </Button>
             </div>
-            {/* <div className="flex items-center gap-x-2 p-1" >
-                <AgentsSearchFilter />
+            <ScrollArea>
+                <div className="flex items-center gap-x-2 p-1" >
+                <MeetingsSearchFilter />
+                <StatusFilter />
+                <AgentIdFilter />
                 {isAnyFilterModified && (
-                    <Button variant='outline' size='sm' onClick={onClearFilters}>
-                        <XCircleIcon /> Clear
+                    <Button variant={"outline"} onClick={onClearFilters}>
+                        <XCircleIcon className="size-4" />Clear
                     </Button>
                 )}
-            </div> */}
+            </div>
+            <ScrollBar orientation="horizontal"/>
+            </ScrollArea>
         </div> 
 
         </>

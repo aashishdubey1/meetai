@@ -31,7 +31,7 @@ function formatDuration(seconds:number){
 }
 
 const statusIconMap = {
-    upcomming:ClockArrowUpIcon,
+    upcoming:ClockArrowUpIcon,
     active:LoaderIcon,
     completed:CircleCheckIcon,
     processing:LoaderIcon,
@@ -39,7 +39,7 @@ const statusIconMap = {
 }
 
 const statusColorMap = {
-    upcomming:"bg-yellow-500/20 text-yellow-800 border border-yellow-800/5",
+    upcoming:"bg-yellow-500/20 text-yellow-800 border border-yellow-800/5",
     active:"bg-blue-500/20 text-blue-800 border border-blue-800/5",
     completed:"bg-emerald-500/20 text-emerald-800 border border-emerald-800/5",
     processing:"bg-gray-300/20 text-gray-800 border-gray-800/5",
@@ -76,6 +76,7 @@ export const columns: ColumnDef<MeetingGetMany[number]>[] = [
     header:"Status",
     cell:({row}) => {
         const Icon = statusIconMap[row.original.status as keyof typeof statusIconMap];
+        console.log("Icon:", Icon, "Status:", row.original.status);
         return (
             <Badge
                 variant='outline'
