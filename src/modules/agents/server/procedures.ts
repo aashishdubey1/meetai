@@ -29,6 +29,7 @@ export const agentsRouter = createTRPCRouter({
                     message:"Agent Not Found"
                 })
             }
+            return updatedAgent;
 
         }),
     
